@@ -47,7 +47,9 @@ public class CtlRegisto {
 				boolean RegistoEfetuado = quizDB.Insert(email);
 				
 				if (RegistoEfetuado) {
-					ctlEmail.Confirmacao_Envia_Password(email);
+					String generatedPassword = String.format("%x",(int)(Math.random()*100));
+					System.out.println(generatedPassword);
+					ctlEmail.Confirmacao_Envia_Password(email, generatedPassword);
 					JOptionPane.showMessageDialog(null, "Bem-vindo ao IULQuiz!");
 					return true;
 				} else {
