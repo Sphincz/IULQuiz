@@ -1,6 +1,5 @@
 package pt.iul.sida.iulquiz;
 
-import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,12 +15,6 @@ public class QuizBD {
 	
 	/** Uma query de acesso a base de dados. */
 	private Statement statement;
-	
-	/** O URL para estabelecer ligacao a base de dados. localhost2638 significa que o servidor da base de dados e local, ligado na porta 2638. O nome da base de dados e EatDrink. */
-	private String dburl = "jdbc:sqlanywhere:Tds:localhost:2638?eng=QuizBD";
-	
-	/** O username e password de acesso a base de dados */
-	private String user = "IULQuiz", password = "QuizIULDB";
 	
 	/** A ligacao a base de dados. */
 	private Connection con;
@@ -71,11 +64,10 @@ public class QuizBD {
 		return false;
 	}
 
-	public synchronized boolean Insert(String email) {
+	public synchronized boolean Insert(String email, String generatedPassword) {
 		boolean Registo_Efectuado = false;
 		try{
 			statement = con.createStatement();
-			statement.executeQuery("INSERT INTO Estudante VALUES ('"+email+"', 'LEI', 'Engenharia Informática', 'Farrobado', 'MEADAS');");
 			
 			System.out.println("Insert com sucesso na QuizDB.");
 			Registo_Efectuado = true;

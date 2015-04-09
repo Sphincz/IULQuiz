@@ -36,8 +36,10 @@ public class Email {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(email));
             message.setSubject("Bem-vindo ao IULQuiz, "+email+"!");
-            message.setText("Dear Mail Crawler,"
-                + "\n\n No spam to my email, please!");
+            message.setText("Bem vindo ao IULQuiz"
+                + "\n\nAcabámos de confirmar o teu registo no IULQuiz e a password para fazeres login é:"
+                + "\n\nPassword: "+generatedPassword+""
+                + "\n\nObrigado!");
 
             Transport.send(message);
 

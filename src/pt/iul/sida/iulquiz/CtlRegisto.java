@@ -44,11 +44,11 @@ public class CtlRegisto {
 				JOptionPane.showMessageDialog(null, "O utilizador já existe na base de dados do IULQuiz!");
 			
 			} else {
-				boolean RegistoEfetuado = quizDB.Insert(email);
+				String generatedPassword = String.format("%x",(int)(Math.random()*100));
+				System.out.println(generatedPassword);
+				boolean RegistoEfetuado = quizDB.Insert(email, generatedPassword);
 				
 				if (RegistoEfetuado) {
-					String generatedPassword = String.format("%x",(int)(Math.random()*100));
-					System.out.println(generatedPassword);
 					ctlEmail.Confirmacao_Envia_Password(email, generatedPassword);
 					JOptionPane.showMessageDialog(null, "Bem-vindo ao IULQuiz!");
 					return true;

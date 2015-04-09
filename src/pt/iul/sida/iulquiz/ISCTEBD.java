@@ -2,12 +2,9 @@ package pt.iul.sida.iulquiz;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.swing.JOptionPane;
 
 public class ISCTEBD {
 
@@ -25,9 +22,6 @@ public class ISCTEBD {
 	
 	/** A ligacao a base de dados. */
 	private Connection con;
-
-	/** Variavel global que verifica se o email introduzido se trata de um aluno ou nao na BD **/
-	private boolean ItsAluno;
 	
 	/**
 	 * Construtor que cria e estabelece uma ligacao ao servidor da base de dados.
