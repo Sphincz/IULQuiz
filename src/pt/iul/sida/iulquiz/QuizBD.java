@@ -68,6 +68,7 @@ public class QuizBD {
 		boolean Registo_Efectuado = false;
 		try{
 			statement = con.createStatement();
+			statement.executeQuery("INSERT INTO Estudante VALUES ('"+email+"', 'LEI', 'Engenharia Informática', 'Farrobado', '"+generatedPassword+"');");
 			
 			System.out.println("Insert com sucesso na QuizDB.");
 			Registo_Efectuado = true;
