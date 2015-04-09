@@ -27,7 +27,7 @@ public class ISCTEBD {
 	private Connection con;
 
 	/** Variavel global que verifica se o email introduzido se trata de um aluno ou nao na BD **/
-	public static boolean ItsAluno;
+	private boolean ItsAluno;
 	
 	/**
 	 * Construtor que cria e estabelece uma ligacao ao servidor da base de dados.
@@ -37,25 +37,30 @@ public class ISCTEBD {
         try {
 			con = DriverManager.getConnection(dburl, user, password);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
+			System.out.println("ERRO na IULQUIZ");
+			//JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
 			System.exit(0);
 			
 		}
 	}
 	
-	public boolean Select(Utilizador email) throws SQLException {
-		ItsAluno = false;
+	public boolean Select(String email) throws SQLException {
 		statement = con.createStatement();
-		result = statement.executeQuery("SELECT * FROM Alunos WHERE Alunos.email = "+email+";");
+		result = statement.executeQuery("SELECT * FROM Aluno WHERE Aluno.Email = '"+email+"';");
 		
-		if(result.next()) {	
-			// Email_Existente = ItsAluno==true
-			ItsAluno = true;
-			return ItsAluno;
+		
+		if(result.next()) {
+			System.out.println("Email existe na ISCTEDB.");
+			boolean Email_Existente = true;
+			statement.close();
+			result.close();
+			return Email_Existente;
 		} else {
-			// Email_Nao_Existente = ItsAluno==false
-			ItsAluno = false;
-			return ItsAluno;
+			System.out.println("Email não existe na ISCTEDB.");
+			boolean Email_Nao_Existente = false;
+			statement.close();
+			result.close();
+			return Email_Nao_Existente;
 		}
 	}
 }

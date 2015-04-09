@@ -1,6 +1,6 @@
 package pt.iul.sida.iulquiz;
 
-public class Utilizador implements FormRegisto {
+public class Utilizador {
 
 	private String Email;
 	private String Pergunta;
@@ -20,14 +20,7 @@ public class Utilizador implements FormRegisto {
 		Resposta = resposta;
 	}
 	
-	@Override
 	public boolean Confirma_Registo() {
 		return false;
 	}
-	
-	@Override
-	public FormRegisto new_Formulario() {
-		return null;
-	}
-	
 }

@@ -1,0 +1,36 @@
+Problemas encontradas na especificação:
+
+- As bases de dados nao sao remotas, logo o utilizador tera que ter as bases de dados do Fenix (ISCTEDB) e do IULQuiz (QuizDB) guardadas
+localmente, pois so assim é possivel a verificacao da existencia do email em ambas as bases.
+
+- Classe FormRegisto tem um metodo que chama a ela propria (new Formulario).
+
+- O Sistema permite que outras pessoas que não os alunos (funcionarios e professores) se registem no sistema, o que nao deveria ser possivel.
+
+- A classe FormRegisto pode ser mal interpretada como sendo Interface (java) ou classe de interface grafica! Foi considerada
+como sendo classe interface grafica pois apesar da classe Utilizador usar um metodo igual ao FormRegisto, pensou-se que tinha sido 
+implementada a interface FormRegisto, mas para isso ser verdade, o metodo new Formulario tambem tinha de estar presente na classe Utilizador,
+o que não é verdade (ver diagrama de classes de apoio ao de sequencia).
+
+- Confirma_registo(), Verifica_Existencia() nao tem argumentos nenhuns, o que impossibilita a verificacao do email. Foi considerado 
+o Confirma_Registo(email) e o Verifica_Existencia(email).
+
+- No formRegisto, nao existe a inicializacao da classe de controlador. Foi inicializado o controlador no construtor do FormRegisto().
+
+- No CtlRegisto, nao existe a inicializacao da classe de dados do estudante. Foi inicializado o controlador no construtor do CtlRegisto().
+
+- No DEstudante, nao existe a inicializacao da classe de base de dados. Foi inicializado o controlador no construtor do DEstudante().
+
+- No diagrama de sequencia existe um metodo chamado Confirma_registo() na classe CtlRegisto mas esta ausente no diagrama de classes.
+
+- No diagrama de sequencia existe um metodo chamado Verifica_existencia() na classe DEstudante mas esta ausente no diagrama de classes.
+
+- Nao deveria de ser o utilizador a criar a pergunta secreta, pois deveria de existir por default. Os utilizadores poderao criar perguntas
+secretas iguais ou semelhantes, o que e desnecessario.
+
+- A classe Utilizador possui os metodos Set que no diagrama de sequencia constam na classe FormRegisto. O diagrama de classes contradiz
+pois os metodos Set estao na classe Utilizador.
+
+- O metodo Select da Classe DEstudante foi excluido pois em nenhuma parte do diagrama de sequencia esse metodo é chamado.
+
+-

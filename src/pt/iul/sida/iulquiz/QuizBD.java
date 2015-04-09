@@ -35,33 +35,57 @@ public class QuizBD {
 	public QuizBD() {
         // Connect to Sybase Database
         try {
-			con = DriverManager.getConnection(dburl, user, password);
+			con = DriverManager.getConnection("jdbc:sqlanywhere:uid=IULQuiz;pwd=QuizIULDB;eng=QuizBD");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
-			System.exit(0);
-			
 		}
 	}
 	
-	public boolean Select(Utilizador email) throws SQLException {
-		EmailJaRegistado = false;
+	public boolean Select(String email) {
+		boolean Email_Ja_Registado;
+		boolean Email_Nao_Existente;
+			
+		try {
 		statement = con.createStatement();
-		result = statement.executeQuery("SELECT * FROM Alunos WHERE Alunos.email = "+email+";");
+		result = statement.executeQuery("SELECT * FROM Estudante WHERE Estudante.Email_Aluno = '"+email+"';");
 		
-		if(result.next()) {	
-			// Email_Ja_Registado = EmailJaRegistado==true
-			EmailJaRegistado = true;
-			return EmailJaRegistado;
+		if(result.next()) {
+			System.out.println("Email já registado na QuizBD.");
+			Email_Ja_Registado = true;
+			statement.close();
+			result.close();
+			return Email_Ja_Registado;
 		} else {
-			// Email_Nao_Existente = EmailJaRegistado==false
-			EmailJaRegistado = false;
-			return EmailJaRegistado;
+			System.out.println("Email não registado na QuizBD.");
+			Email_Nao_Existente = false;
+			statement.close();
+			result.close();
+			return Email_Nao_Existente;
 		}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de alunos na base de dados QuizBD.");
+		}
+		return false;
 	}
 
-	public void Insert(Utilizador email) throws SQLException {
-		statement = con.createStatement();
-		statement.executeQuery("INSERT INTOM Alunos VALUES ("+email+");");
+	public synchronized boolean Insert(String email) {
+		boolean Registo_Efectuado = false;
+		try{
+			statement = con.createStatement();
+			statement.executeQuery("INSERT INTO Estudante VALUES ('"+email+"', 'LEI', 'Engenharia Informática', 'Farrobado', 'MEADAS');");
+			
+			System.out.println("Insert com sucesso na QuizDB.");
+			Registo_Efectuado = true;
+			statement.close();
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro na inserção do utilizador na base de dados QuizBD.");
+		}
+		return Registo_Efectuado;	
 	}
 
 }
