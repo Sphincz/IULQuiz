@@ -2,6 +2,7 @@ package pt.iul.sida.iulquiz;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,45 +36,58 @@ public class ISCTEBD {
 	
 	public boolean Select(Utilizador user) {
 		try {
+			
+			
 			statement = con.createStatement();
 
 			if(user.getCurso().equals("Curso: (opcional)")) {
+				String selectStatement = "SELECT Nome FROM Aluno WHERE Aluno.Email = ? AND Aluno.Curso IS NULL";
+				PreparedStatement prepStmt = con.prepareStatement(selectStatement);
+				prepStmt.setString(1,user.getEmail());
+				ResultSet rs = prepStmt.executeQuery();
 				
-				result = statement.executeQuery("SELECT Nome FROM Aluno WHERE Aluno.Email = '"+user.getEmail()+"' AND Aluno.Curso IS NULL;");
+				//result = statement.executeQuery("SELECT Nome FROM Aluno WHERE Aluno.Email = '"+user.getEmail()+"' AND Aluno.Curso IS NULL;");
 				
-				if(result.next()) {
+				if(rs.next()) {
 					user.Set_Nome(result.getString(1));
 					System.out.println("Email existe na ISCTEDB.");
 					boolean Email_Existente = true;
-					statement.close();
-					result.close();
+					prepStmt.close();
+					rs.close();
 					return Email_Existente;
 				} else {
 					System.out.println("Email não existe na ISCTEDB.");
 					boolean Email_Nao_Existente = false;
-					statement.close();
-					result.close();
+					prepStmt.close();
+					rs.close();
 					return Email_Nao_Existente;
 				}
 			
 			
 			} else {
 				
-				result = statement.executeQuery("SELECT Nome, Sigla_Curso, Email FROM Aluno WHERE Aluno.Email = '"+user.getEmail()+"' AND Aluno.Curso = '"+user.getCurso()+"';");
+				String selectStatement = "SELECT Nome, Sigla_Curso, Email FROM Aluno WHERE Aluno.Email = ? AND Aluno.Curso = ?";
+				PreparedStatement prepStmt = con.prepareStatement(selectStatement);
+				prepStmt.setString(1,user.getEmail());
+				prepStmt.setString(2,user.getCurso());
+				ResultSet rs = prepStmt.executeQuery();
 				
-				if(result.next()) {
-					user.Set_Nome(result.getString(1));
-					user.Set_SiglaCurso(result.getString(2));
+				
+				//result = statement.executeQuery("SELECT Nome, Sigla_Curso, Email FROM Aluno WHERE Aluno.Email = '"+user.getEmail()+"' AND Aluno.Curso = '"+user.getCurso()+"';");
+				
+				if(rs.next()) {
+					user.Set_Nome(rs.getString(1));
+					user.Set_SiglaCurso(rs.getString(2));
 					System.out.println("Email existe na ISCTEDB.");
 					boolean Email_Existente = true;
-					statement.close();
-					result.close();
+					prepStmt.close();
+					rs.close();
 					return Email_Existente;
 				} else {
 					System.out.println("Email não existe na ISCTEDB.");
 					boolean Email_Nao_Existente = false;
-					statement.close();
-					result.close();
+					prepStmt.close();
+					rs.close();
 					return Email_Nao_Existente;
 				}
 			}
