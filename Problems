@@ -33,4 +33,16 @@ pois os metodos Set estao na classe Utilizador.
 
 - O metodo Select da Classe DEstudante foi excluido pois em nenhuma parte do diagrama de sequencia esse metodo é chamado.
 
+- No preenchimento do formulario, o curso deveria ser uma comboBox. Foi considerada uma comboBox.
+
+- Pergunta e resposta de segurança nao estao presentes no diagrama de classes da base de dados IULQuiz.
+
+- O layout grafico sofreu uma alteraçao no que diz respeito a introduçao de dados. Com um clique do rato, limpa os campos e permite a
+escrita do conteudo inicialmente apresentado para o efeito.
+
+- Considerou-se que a classe de dados Utilizador pois sao as que possuem os metodos de Set, e é a classe que é chamada nos metodos
+Select e Insert que possuem os dados necessarios para fazer queries a base de dados.
+
+- Necessidade de criar 2 atributos na classe de dados Utilizador para pesquisar na ISCTEDB o Nome e SiglaCurso e guardar na QuizDB
+
 -

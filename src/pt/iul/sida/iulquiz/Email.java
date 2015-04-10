@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
-	public void Confirmacao_Envia_Password(String email, String generatedPassword) {
+	public void Confirmacao_Envia_Password(Utilizador user, String generatedPassword) {
 		final String username = "quiziul@gmail.com";
         final String password = "iulquiz2015";
 
@@ -34,8 +34,8 @@ public class Email {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("quiziul@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(email));
-            message.setSubject("Bem-vindo ao IULQuiz, "+email+"!");
+                InternetAddress.parse(user.getEmail()));
+            message.setSubject("Bem-vindo ao IULQuiz, "+user.getEmail()+"!");
             message.setText("Bem vindo ao IULQuiz"
                 + "\n\nAcabámos de confirmar o teu registo no IULQuiz e a password para fazeres login é:"
                 + "\n\nPassword: "+generatedPassword+""

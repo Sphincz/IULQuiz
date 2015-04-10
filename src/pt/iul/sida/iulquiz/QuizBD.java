@@ -31,17 +31,17 @@ public class QuizBD {
 			con = DriverManager.getConnection("jdbc:sqlanywhere:uid=IULQuiz;pwd=QuizIULDB;eng=QuizBD");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
+			JOptionPane.showMessageDialog(null, "QuizBD - Base de dados desligada ou username e/ou password inválidos!");
 		}
 	}
 	
-	public boolean Select(String email) {
+	public boolean Select(Utilizador user) {
 		boolean Email_Ja_Registado;
 		boolean Email_Nao_Existente;
 			
 		try {
 		statement = con.createStatement();
-		result = statement.executeQuery("SELECT * FROM Estudante WHERE Estudante.Email_Aluno = '"+email+"';");
+		result = statement.executeQuery("SELECT * FROM Estudante WHERE Estudante.Email_Aluno = '"+user.getEmail()+"';");
 		
 		if(result.next()) {
 			System.out.println("Email já registado na QuizBD.");
@@ -64,11 +64,18 @@ public class QuizBD {
 		return false;
 	}
 
-	public synchronized boolean Insert(String email, String generatedPassword) {
+	public synchronized boolean Insert(Utilizador user, String generatedPassword) {
 		boolean Registo_Efectuado = false;
+		
 		try{
 			statement = con.createStatement();
-			statement.executeQuery("INSERT INTO Estudante VALUES ('"+email+"', 'LEI', 'Engenharia Informática', 'Farrobado', '"+generatedPassword+"');");
+			
+			if(user.getCurso().equals("Curso: (opcional)")) {
+				statement.executeQuery("INSERT INTO Estudante VALUES ('"+user.getEmail()+"', NULL, NULL, '"+user.getNome()+"', '"+generatedPassword+"', '"+user.getPergunta()+"', '"+user.getResposta()+"');");
+			} else {
+				System.out.println(user.getSigla_Curso());
+				statement.executeQuery("INSERT INTO Estudante VALUES ('"+user.getEmail()+"', '"+user.getSigla_Curso()+"', '"+user.getCurso()+"', '"+user.getNome()+"', '"+generatedPassword+"', '"+user.getPergunta()+"', '"+user.getResposta()+"');");	
+			}
 			
 			System.out.println("Insert com sucesso na QuizDB.");
 			Registo_Efectuado = true;

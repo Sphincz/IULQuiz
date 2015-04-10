@@ -1,7 +1,5 @@
 package pt.iul.sida.iulquiz;
 
-import java.sql.SQLException;
-
 public class DEstudante {
 
 	private String Email;
@@ -19,7 +17,7 @@ public class DEstudante {
 	
 	METODO EXCLUIDO */ 
 
-	public boolean Verifica_Existencia(String email) throws SQLException {
-		return iscteDB.Select(email);
+	public boolean Verifica_Existencia(Utilizador user) {
+		return iscteDB.Select(user);
 	}
 }
