@@ -35,6 +35,7 @@ public class ISCTEBD {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "ISCTEDB - Base de dados desligada ou username e/ou password inválidos!");
+			System.exit(0);
 		}
 	}
 	

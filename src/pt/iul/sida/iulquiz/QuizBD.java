@@ -32,6 +32,7 @@ public class QuizBD {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "QuizBD - Base de dados desligada ou username e/ou password inválidos!");
+			System.exit(0);
 		}
 	}
 	
