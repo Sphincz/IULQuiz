@@ -35,7 +35,9 @@ pois os metodos Set estao na classe Utilizador.
 
 - No preenchimento do formulario, o curso deveria ser uma comboBox. Foi considerada uma comboBox.
 
-- Pergunta e resposta de segurança nao estao presentes no diagrama de classes da base de dados IULQuiz.
+- Pergunta e resposta de segurança nao estao presentes no diagrama de classes da base de dados IULQuiz. Inseridos no DC.
+Tambem no DC foi alterado o atributo Curso na classe Estudante para SET NULL, pois sendo um campo opcional no formulario (neste caso),
+ pode ser NULL (o que significa que o user escolheu a opçao por default, ou seja nao esta associado a nenhum curso).
 
 - O layout grafico sofreu uma alteraçao no que diz respeito a introduçao de dados. Com um clique do rato, limpa os campos e permite a
 escrita do conteudo inicialmente apresentado para o efeito.
@@ -45,4 +47,4 @@ Select e Insert que possuem os dados necessarios para fazer queries a base de da
 
 - Necessidade de criar 2 atributos na classe de dados Utilizador para pesquisar na ISCTEDB o Nome e SiglaCurso e guardar na QuizDB
 
--
+- 
