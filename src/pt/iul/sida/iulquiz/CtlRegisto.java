@@ -2,7 +2,9 @@ package pt.iul.sida.iulquiz;
 
 import java.sql.SQLException;
 import java.util.Random;
+import java.util.Vector;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class CtlRegisto {
@@ -76,4 +78,16 @@ public class CtlRegisto {
 		}
 		return false;
 	}
+	
+	/** METODO ADICIONADO */
+	public Vector<String> getCursos() {
+		return estudante.getCursos();
+	}
+	/** METODO ADICIONADO */
+
+	/** METODO ADICIONADO */
+	public Vector<String> getPerguntas() {
+		return quizDB.SelectPerguntas();
+	}
+	/** METODO ADICIONADO */
 }

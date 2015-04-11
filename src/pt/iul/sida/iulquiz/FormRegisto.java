@@ -22,15 +22,10 @@ public class FormRegisto extends JFrame {
 	private Utilizador user;
 	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtPerguntaSecreta;
+	private JComboBox<String> txtPerguntaSecreta;
 	private JTextField txtRespostaSegurana;
 	private JComboBox<String> txtCurso;
 	private CtlRegisto controlador;
-	private String[] cursos = {"Curso: (opcional)","Arquitectura","Antropologia","Ciência Política","Economia",
-							   "Engenharia de Telecomunicações e Informática", "Engenharia Informática","Finanças e Contabilidade",
-							   "Gestão","Gestão de Marketing","Gestão de Recursos Humanos","Gestão Industrial e Logística",
-							   "Gestão e Engenharia Industrial","História Moderna e Contemporânea","Informática e Gestão de Empresas",
-							   "Psicologia","Serviço Social","Sociologia"};
 	
 	public static void main(String[] args) {
 		new FormRegisto();
@@ -71,21 +66,9 @@ public class FormRegisto extends JFrame {
             }
         });
 		
-		txtPerguntaSecreta = new JTextField();
-		txtPerguntaSecreta.setText("Pergunta Seguran\u00E7a:");
-		txtPerguntaSecreta.setColumns(10);
+		txtPerguntaSecreta = new JComboBox<String>(controlador.getPerguntas());;
 		txtPerguntaSecreta.setBounds(20, 56, 250, 20);
 		contentPane.add(txtPerguntaSecreta);
-		
-		txtPerguntaSecreta.addMouseListener(new MouseAdapter(){
-            int clearTimes = 1;
-            public void mousePressed(MouseEvent e){
-            	if(clearTimes == 1) {
-            		clearTimes = 0;
-            		txtPerguntaSecreta.setText("");
-            	}
-            }
-        });
 		
 		txtRespostaSegurana = new JTextField();
 		txtRespostaSegurana.setText("Resposta Seguran\u00E7a:");
@@ -103,7 +86,7 @@ public class FormRegisto extends JFrame {
             }
         });
 		
-		txtCurso = new JComboBox<String>(cursos);
+		txtCurso = new JComboBox<String>(controlador.getCursos());
 		txtCurso.setBounds(20, 118, 250, 20);
 		contentPane.add(txtCurso);
 		
@@ -115,16 +98,20 @@ public class FormRegisto extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				user.Set_Email(txtEmail.getText());
-				user.Set_Pergunta(txtPerguntaSecreta.getText());
-				user.Set_Resposta(txtRespostaSegurana.getText());
-				user.Set_Curso(txtCurso.getSelectedItem().toString());
-				
-				try {
-					Confirma_Registo(user);
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
-					e.printStackTrace();
-					System.exit(0);
+				if(txtPerguntaSecreta.getSelectedIndex()==0) {
+					JOptionPane.showMessageDialog(null, "Por favor, introduza uma pergunta de segurança!");
+				} else {
+					user.Set_Pergunta(txtPerguntaSecreta.getSelectedItem().toString());
+					user.Set_Resposta(txtRespostaSegurana.getText());
+					user.Set_Curso(txtCurso.getSelectedItem().toString());
+					
+					try {
+						Confirma_Registo(user);
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
+						e.printStackTrace();
+						System.exit(0);
+					}
 				}
 			}
 		});

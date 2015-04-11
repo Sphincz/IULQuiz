@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -47,9 +48,7 @@ public class QuizBD {
 			PreparedStatement prepStmt = con.prepareStatement(selectStatement);
 			prepStmt.setString(1,user.getEmail());
 			ResultSet rs = prepStmt.executeQuery();
-//		statement = con.createStatement();
-	//	result = statement.executeQuery("SELECT * FROM Estudante WHERE Estudante.Email_Aluno = '"+user.getEmail()+"';");
-		
+	
 		if(rs.next()) {
 			System.out.println("Email já registado na QuizBD.");
 			Email_Ja_Registado = true;
@@ -77,23 +76,7 @@ public class QuizBD {
 		try{
 			
 			PreparedStatement prepStmt;
-//			ResultSet rs;
-			//statement = con.createStatement();
-			
-			if(user.getCurso().equals("Curso: (opcional)")) {
-				String insertStatement = "INSERT INTO Estudante VALUES (?, NULL, NULL, ?, ?, ?,?)";
-				prepStmt = con.prepareStatement(insertStatement);
-				prepStmt.setString(1,user.getEmail());
-				prepStmt.setString(2,user.getNome());
-				prepStmt.setString(3,generatedPassword);
-				prepStmt.setString(4,user.getPergunta());
-				prepStmt.setString(5,user.getResposta());
-				prepStmt.executeQuery();
-				
-				//statement.executeQuery("INSERT INTO Estudante VALUES ('"+user.getEmail()+"', NULL, NULL, '"+user.getNome()+"', '"+generatedPassword+"', '"+user.getPergunta()+"', '"+user.getResposta()+"');");
-			} else {
 				System.out.println(user.getSigla_Curso());
-				//statement.executeQuery("INSERT INTO Estudante VALUES ('"+user.getEmail()+"', '"+user.getSigla_Curso()+"', '"+user.getCurso()+"', '"+user.getNome()+"', '"+generatedPassword+"', '"+user.getPergunta()+"', '"+user.getResposta()+"');");	
 				String insertStatement = "INSERT INTO Estudante VALUES (?,?,?, ?, ?, ?,?)";
 				prepStmt = con.prepareStatement(insertStatement);
 				prepStmt.setString(1,user.getEmail());
@@ -104,18 +87,37 @@ public class QuizBD {
 				prepStmt.setString(6,user.getPergunta());
 				prepStmt.setString(7,user.getResposta());
 				prepStmt.executeQuery();
-			
-			}
-			
+
 			System.out.println("Insert com sucesso na QuizDB.");
 			Registo_Efectuado = true;
 			prepStmt.close();
-//			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro na inserção do utilizador na base de dados QuizBD.");
 		}
 		return Registo_Efectuado;	
 	}
+	
+	
+	/** METODO ADICIONADO */
+	public Vector<String> SelectPerguntas() {
+		Vector<String> list = new Vector<String>();
+		list.add("Pergunta Segurança:");
+		try {
+			String selectStatement = "SELECT Pergunta_Seguranca FROM PerguntaSeguranca";
+			statement = con.createStatement();
+			result = statement.executeQuery(selectStatement);
+			
+			while(result.next()) {
+				list.add(result.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro na procura de cursos na base de dados ISCTEDB.");
+			System.exit(0);
+		}
+		return list;
+	}
+	/** METODO ADICONADO */
 
 }

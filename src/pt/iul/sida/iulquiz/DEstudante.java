@@ -1,5 +1,7 @@
 package pt.iul.sida.iulquiz;
 
+import java.util.Vector;
+
 public class DEstudante {
 
 	private String Email;
@@ -20,4 +22,10 @@ public class DEstudante {
 	public boolean Verifica_Existencia(Utilizador user) {
 		return iscteDB.Select(user);
 	}
+	
+	/** METODO ADICIONADO */
+	public Vector<String> getCursos() {
+		return iscteDB.SelectCursos();
+	}
+	/** METODO ADICIONADO */
 }

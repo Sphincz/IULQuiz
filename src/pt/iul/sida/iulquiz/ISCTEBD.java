@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -39,42 +40,13 @@ public class ISCTEBD {
 			
 			
 			statement = con.createStatement();
-
-			if(user.getCurso().equals("Curso: (opcional)")) {
-				String selectStatement = "SELECT Nome FROM Aluno WHERE Aluno.Email = ? AND Aluno.Curso IS NULL";
-				PreparedStatement prepStmt = con.prepareStatement(selectStatement);
-				prepStmt.setString(1,user.getEmail());
-				ResultSet rs = prepStmt.executeQuery();
-				
-				//result = statement.executeQuery("SELECT Nome FROM Aluno WHERE Aluno.Email = '"+user.getEmail()+"' AND Aluno.Curso IS NULL;");
-				
-				if(rs.next()) {
-					user.Set_Nome(result.getString(1));
-					System.out.println("Email existe na ISCTEDB.");
-					boolean Email_Existente = true;
-					prepStmt.close();
-					rs.close();
-					return Email_Existente;
-				} else {
-					System.out.println("Email não existe na ISCTEDB.");
-					boolean Email_Nao_Existente = false;
-					prepStmt.close();
-					rs.close();
-					return Email_Nao_Existente;
-				}
-			
-			
-			} else {
 				
 				String selectStatement = "SELECT Nome, Sigla_Curso, Email FROM Aluno WHERE Aluno.Email = ? AND Aluno.Curso = ?";
 				PreparedStatement prepStmt = con.prepareStatement(selectStatement);
 				prepStmt.setString(1,user.getEmail());
 				prepStmt.setString(2,user.getCurso());
 				ResultSet rs = prepStmt.executeQuery();
-				
-				
-				//result = statement.executeQuery("SELECT Nome, Sigla_Curso, Email FROM Aluno WHERE Aluno.Email = '"+user.getEmail()+"' AND Aluno.Curso = '"+user.getCurso()+"';");
-				
+						
 				if(rs.next()) {
 					user.Set_Nome(rs.getString(1));
 					user.Set_SiglaCurso(rs.getString(2));
@@ -90,7 +62,6 @@ public class ISCTEBD {
 					rs.close();
 					return Email_Nao_Existente;
 				}
-			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,4 +69,24 @@ public class ISCTEBD {
 		}
 		return false;
 	}
+	
+	/** METODO ADICIONADO */
+	public Vector<String> SelectCursos() {
+		Vector<String> list = new Vector<String>();
+		try {
+			String selectStatement = "SELECT Designacao_Curso FROM Curso ORDER BY Sigla_Curso";
+			statement = con.createStatement();
+			result = statement.executeQuery(selectStatement);
+			
+			while(result.next()) {
+				list.add(result.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro na procura de cursos na base de dados ISCTEDB.");
+			System.exit(0);
+		}
+		return list;
+	}
+	/** METODO ADICONADO */
 }

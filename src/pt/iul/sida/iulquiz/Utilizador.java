@@ -24,12 +24,19 @@ public class Utilizador {
 	public void Set_Resposta(String resposta) {
 		Resposta = resposta;
 	}
+	
+	/** METODO ADICIONADO */
 	public void Set_Nome(String nome) {
 		Nome = nome;
 	}
+	/** METODO ADICIONADO */
+	
+	/** METODO ADICIONADO */
 	public void Set_SiglaCurso(String Sigla_Curso) {
 		siglaCurso = Sigla_Curso;
 	}
+	/** METODO ADICIONADO */
+	
 	public String getEmail() {
 		return Email;
 	}
@@ -42,12 +49,18 @@ public class Utilizador {
 	public String getResposta() {
 		return Resposta;
 	}
+	
+	/** METODO ADICIONADO */
 	public String getNome() {
 		return Nome;
 	}
+	/** METODO ADICIONADO */
+	
+	/** METODO ADICIONADO */
 	public String getSigla_Curso() {
 		return siglaCurso;
 	}
+	/** METODO ADICIONADO */
 	
 	/* METODO EXCLUIDO
 	public boolean Confirma_Registo() {
